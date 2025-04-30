@@ -10,6 +10,7 @@ gem "tzinfo-data", platforms: %i[windows jruby]
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
+gem "mongoid"
 
 # Development Gems
 group :development do
@@ -32,6 +33,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "irb"
+  gem "pry"
   gem "pry-byebug"
   gem "rspec-rails"
   gem "shoulda-matchers"
