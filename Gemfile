@@ -11,6 +11,7 @@ gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
 gem "mongoid"
+gem "twilio-ruby"
 
 # Development Gems
 group :development do
