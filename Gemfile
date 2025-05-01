@@ -4,13 +4,35 @@ source "https://rubygems.org"
 
 ruby "3.4.1"
 
-gem "rails", "~> 8.0.2"
-gem "puma", ">= 5.0"
-gem "tzinfo-data", platforms: %i[windows jruby]
-gem "bootsnap", require: false
-gem "kamal", require: false
+# Authentication
+gem "devise"
+gem "devise-jwt"
+
+# Background Jobs
 gem "thruster", require: false
+
+# Deployment
+gem "kamal", require: false
+
+# Framework
+gem "rails", "~> 8.0.2"
+
+# MongoDB
 gem "mongoid"
+
+# Performance
+gem "bootsnap", require: false
+
+# Serialization
+gem "blueprinter"
+
+# Server
+gem "puma", ">= 5.0"
+
+# Timezone
+gem "tzinfo-data", platforms: %i[windows jruby]
+
+# Twilio API
 gem "twilio-ruby"
 
 # Development Gems
