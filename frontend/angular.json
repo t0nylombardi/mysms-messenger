@@ -32,7 +32,7 @@
               }
             ],
             "styles": [
-              "src/uno.css",
+              "uno.css",
               "src/styles.scss"
             ],
             "scripts": []
