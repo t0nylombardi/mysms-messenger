@@ -27,7 +27,6 @@ module Users
 
     JWT_SECRET = Rails.application.credentials[Rails.env][:devise_jwt][:secret_key]
 
-    ##
     # Called by Devise when a user signs in successfully.
     #
     # @param current_user [User] The currently authenticated user
@@ -36,7 +35,6 @@ module Users
       render json: success_response("Logged in successfully.", user_data(current_user)), status: :ok
     end
 
-    ##
     # Called by Devise when a user signs out.
     # Attempts to decode the JWT and locate the user.
     def respond_to_on_destroy
@@ -51,7 +49,6 @@ module Users
 
     private
 
-    ##
     # Decodes JWT from Authorization header and fetches the associated user.
     #
     # @return [User, nil] The authenticated user or nil if invalid
@@ -65,7 +62,6 @@ module Users
       nil
     end
 
-    ##
     # Formats a successful JSON response.
     #
     # @param message [String] Message to return
@@ -81,7 +77,6 @@ module Users
       }
     end
 
-    ##
     # Formats an error JSON response.
     #
     # @param message [String]
@@ -93,7 +88,6 @@ module Users
       }
     end
 
-    ##
     # Serializes user attributes using your existing UserSerializer.
     #
     # @param user [User]

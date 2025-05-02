@@ -1,7 +1,22 @@
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+
+export type LoginPayload = {
+  user: {
+    email: string;
+    password: string;
+  };
+};
+
+export type SignupPayload = {
+  user: {
+    email: string;
+    password: string;
+    password_confirmation: string;
+  };
+};
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -11,15 +26,54 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
 
-  signup(payload: { username: string; password: string }) {
-    return this.http.post(`${this.API_URL}/signup`, payload);
+  login(payload: LoginPayload) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+
+    return this.http.post(`${this.API_URL}/login`, payload, {
+      headers,
+      observe: 'response',
+      responseType: 'json'
+    }).pipe(
+      tap((response: HttpResponse<any>) => {
+        const body: any = response.body;
+        const userId = body?.status?.data?.id;
+
+        if (userId) {
+          sessionStorage.setItem('userId', userId);
+          this.isLoggedIn = true;
+          this.router.navigate(['/dashboard']);
+        } else {
+          console.warn('No user ID found in response');
+        }
+      })
+    );
   }
 
-  login(payload: { username: string; password: string }) {
-    return this.http.post(`${this.API_URL}/login`, payload).pipe(
-      tap(() => {
-        this.isLoggedIn = true;
-        this.router.navigate([`${this.API_URL}/dashboard`]);
+  signup(payload: SignupPayload) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+
+    return this.http.post(`${this.API_URL}/signup`, payload, {
+      headers,
+      observe: 'response',
+      responseType: 'json'
+    }).pipe(
+      tap((response: HttpResponse<any>) => {
+        const authHeader = response.headers.get('Authorization');
+        const token = authHeader?.split(' ')?.[1];
+
+        if (token) {
+          sessionStorage.setItem('session', token);
+          this.isLoggedIn = true;
+          this.router.navigate(['/dashboard']);
+        } else {
+          console.warn('No JWT found in headers');
+        }
       })
     );
   }

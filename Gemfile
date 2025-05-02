@@ -7,6 +7,7 @@ ruby "3.4.1"
 # Authentication
 gem "devise"
 gem "devise-jwt"
+gem "rack-cors"
 
 # Background Jobs
 gem "thruster", require: false
