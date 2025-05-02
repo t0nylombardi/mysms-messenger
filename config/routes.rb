@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :messages, only: [:create, :index]
+    end
+  end
   get "up", to: "rails/health#show", as: :rails_health_check
 
   devise_for :users,

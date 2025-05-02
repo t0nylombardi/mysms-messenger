@@ -25,6 +25,8 @@ module Users
     include RackSessionsMock
     respond_to :json
 
+    JWT_SECRET = Rails.application.credentials[Rails.env][:devise_jwt][:secret_key]
+
     ##
     # Called by Devise when a user signs in successfully.
     #
@@ -57,7 +59,7 @@ module Users
       token = request.headers["Authorization"]&.split(" ")&.last
       return nil unless token
 
-      payload = JWT.decode(token, Rails.application.credentials[Rails.env][:devise_jwt][:secret_key]).first
+      payload = JWT.decode(token, JWT_SECRET).first
       User.find_by(id: payload["sub"])
     rescue JWT::DecodeError, Mongoid::Errors::DocumentNotFound
       nil

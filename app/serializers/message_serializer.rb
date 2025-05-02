@@ -3,5 +3,7 @@
 class MessageSerializer < Blueprinter::Base
   identifier :id
 
-  fields :phone, :body, :session_id, :created_at
+  fields :phone, :body, :created_at
+
+  association :user, blueprint: UserSerializer, view: :minimal
 end

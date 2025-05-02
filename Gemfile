@@ -67,6 +67,7 @@ end
 
 # Test Gems
 group :test do
+  gem "database_cleaner-mongoid"
   gem "mongoid-rspec"
   gem "rspec-github", require: false
   gem "webmock"

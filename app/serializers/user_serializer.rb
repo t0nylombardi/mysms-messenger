@@ -5,5 +5,7 @@ class UserSerializer < Blueprinter::Base
 
   fields :email, :jti
 
-  association :messages, blueprint: MessageSerializer
+  view :minimal do
+    fields :id, :email # or whatever is safe
+  end
 end

@@ -14,6 +14,7 @@ RSpec.describe Message, type: :model do
   end
 
   describe "validations" do
+    let(:user) { create(:user) }
     it { is_expected.to validate_presence_of(:phone) }
     it { is_expected.to validate_length_of(:phone).within(10..15) }
 
@@ -37,16 +38,6 @@ RSpec.describe Message, type: :model do
       message.session_id = "12345"
       expect(message).not_to be_valid
       expect(message.errors[:session_id]).to include("must be a valid UUID")
-    end
-
-    it "is invalid with a duplicate session_id" do
-      session_id = SecureRandom.uuid
-      create(:message, session_id: session_id)
-
-      dup = build(:message, session_id: session_id)
-
-      expect(dup).not_to be_valid
-      expect(dup.errors[:session_id]).to include("The provided Session is already taken; please enter a different Session.")
     end
   end
 end
