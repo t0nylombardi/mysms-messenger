@@ -1,0 +1,83 @@
+<div class="mx-8 flex flex-col justify-center items-center">
+
+  <div class="w-full flex flex-row justify-between items-center">
+    <h1 class="font-800 text-3xl text-text p-2 uppercase">
+      My SmS Messenger
+    </h1>
+    <div class="flex justify-end mb-4">
+      <app-logout-button></app-logout-button>
+    </div>
+  </div>
+  <div class="h-screen w-full flex justify-center ___">
+    <div class="w-full items-center grid grid-cols-1 md:grid-cols-2 gap-x-24 mx-6">
+      <div class="left h-screen-sm p-8 rounded-2xl shadow-2xl-iris">
+        <div class="flex flex-col text-text mx-8">
+          <h1 class="text-xl font-bold mb-4 uppercase">Send a Message</h1>
+          <form (ngSubmit)="sendMessage()" #messageForm="ngForm" class="w-full flex flex-col">
+            <div class="mb-4">
+              <input type="text" id="phone" name="phone" [(ngModel)]="message.to" required
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-lg"
+                placeholder="+1234567890">
+            </div>
+            <div class="mb-4">
+              <textarea
+                [(ngModel)]="message.body"
+                [attr.maxlength]="SMSMaxLength"
+                id="body"
+                name="body"
+                placeholder="Type your message..."
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-lg"
+                rows="5"
+                required
+                >
+              </textarea>
+              <div
+               class="text-xs text-right text-muted mt-1"
+                [ngClass]="{
+                  'text-love': charCount > SMSMaxLength,
+                  'text-white': charCount >= 200 && charCount < SMSMaxLength,
+                  'text-muted': charCount <= SMSMaxLength
+                }"
+              >
+                {{ charCount }} / {{ SMSMaxLength }}
+              </div>
+            </div>
+            <button type="submit"
+              class="w-[15rem] rounded-md bg-love hover:bg-darken-90 py-2 px-4 border border-transparent text-center text-lg cursor-pointer text-background hover:text-text uppercase transition-all shadow-md hover:shadow-lg">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="right h-screen-sm p-8 rounded-2xl shadow-2xl-iris flex flex-col overflow-y-auto">
+        <div class="flex flex-col items-center text-text">
+          <h1 class="text-xl font-bold mb-4">Message History ({{msgCount}})</h1>
+          <div class="w-full items-center my-4">
+            <div *ngIf="messages.length; else noMessages">
+              <div *ngFor="let msg of messages" class="w-full flex flex-col mb-2 p-3 overflow-y-scroll overflow-x-hidden">
+
+                <div class="flex justify-between items-center grid md:grid-cols-2 border border-2 border-gray-300 py-4 px-2">
+                  <div class="font-bold text-lg">{{ msg.phone | phoneFormat }}</div>
+                  <div class="">{{ msg.created_at | date:"EEEE, MMMM d, y, 'at' h:mm:ss a" }}</div>
+                </div>
+
+                <div class="h-[7rem] w-full flex flex-col justify-center message-border py-2">
+                  <div class="text-sm text-text break-words">{{msg.body}}</div>
+                </div>
+                <div class="text-xs text-right text-muted mt-1">
+                  {{ msg.body.length }} / {{ SMSMaxLength }}
+                </div>
+
+              </div>
+            </div>
+
+            <ng-template #noMessages>
+              <p>No messages found. Sadge </p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
