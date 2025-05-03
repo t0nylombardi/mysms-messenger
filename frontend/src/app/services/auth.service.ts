@@ -18,6 +18,14 @@ export type SignupPayload = {
   };
 };
 
+export type MessagePayload = {
+  message: {
+    from: string;
+    body: string;
+    createdAt: string;
+  };
+};
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private API_URL = 'http://localhost:3000';
@@ -38,16 +46,21 @@ export class AuthService {
       responseType: 'json'
     }).pipe(
       tap((response: HttpResponse<any>) => {
-        const body: any = response.body;
-        const userId = body?.status?.data?.id;
+        const token = this.extractToken(response);
+        const userId = response.body?.status?.data?.id;
 
-        if (userId) {
-          sessionStorage.setItem('userId', userId);
-          this.isLoggedIn = true;
-          this.router.navigate(['/dashboard']);
-        } else {
-          console.warn('No user ID found in response');
+        if (!userId) {
+          console.warn('[AuthService] Login failed: Missing user ID in response.');
+          return;
         }
+
+        if (!token) {
+          console.warn('[AuthService] Login warning: No JWT token found in Authorization header.');
+        }
+
+        this.persistSession(userId, token);
+        this.isLoggedIn = true;
+        this.router.navigate(['/messages']);
       })
     );
   }
@@ -64,26 +77,45 @@ export class AuthService {
       responseType: 'json'
     }).pipe(
       tap((response: HttpResponse<any>) => {
-        const authHeader = response.headers.get('Authorization');
-        const token = authHeader?.split(' ')?.[1];
+        const token = this.extractToken(response);
+        const userId = response.body?.status?.data?.id;
 
-        if (token) {
-          sessionStorage.setItem('session', token);
-          this.isLoggedIn = true;
-          this.router.navigate(['/dashboard']);
-        } else {
-          console.warn('No JWT found in headers');
+        if (!userId) {
+          console.warn('[AuthService] Login failed: Missing user ID in response.');
+          return;
         }
+
+        if (!token) {
+          console.warn('[AuthService] Login warning: No JWT token found in Authorization header.');
+        }
+
+        this.persistSession(userId, token);
+        this.isLoggedIn = true;
+        this.router.navigate(['/messages']);
       })
     );
   }
 
   logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     this.isLoggedIn = false;
     this.router.navigate([`${this.API_URL}/login`]);
   }
 
   userIsAuthenticated(): boolean {
     return this.isLoggedIn;
+  }
+
+  private extractToken(response: HttpResponse<any>): string | null {
+    const authHeader = response.headers.get('authorization');
+    return authHeader?.split(' ')?.[1] || null;
+  }
+
+  private persistSession(userId: string, token: string | null): void {
+    localStorage.setItem('userId', userId);
+    if (token) {
+      localStorage.setItem('token', token);
+    }
   }
 }

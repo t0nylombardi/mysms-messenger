@@ -31,7 +31,7 @@ export class LoginComponent {
       }
     }).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/messages']);
         console.log('Logged in!');
       },
       error: err => console.error('Login failed:', err)

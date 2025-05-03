@@ -14,7 +14,7 @@ class Message
   validates :phone, presence: true
   validates :phone, format: {with: /\A\+?[0-9\s\-()]+\z/, message: "must be a valid phone number"}
   validates :phone, length: {minimum: 10, maximum: 15}
-  validates :body, length: {minimum: 1, maximum: 160}
+  validates :body, length: {minimum: 1, maximum: 250}
   validates :body, format: {with: /\A[\p{Print}\p{Space}]+\z/, message: "must be printable text only"}
   validates :session_id, presence: true
   validates :session_id, format: {with: /\A[0-9a-fA-F\-]{36}\z/, message: "must be a valid UUID"}

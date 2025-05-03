@@ -5,48 +5,48 @@
       <div class="h-screen flex flex-col justify-center items-center text-text">
         <div class="p-4">
           <h1 class="text-4xl ">Sign Up</h1>
-          <form (ngSubmit)="onSignup()" #loginForm="ngForm" class="w-full max-w-sm mt-4">
+          <form (ngSubmit)="onSignup()" #signupForm="ngForm" class="w-full max-w-sm mt-4">
             <div class="mb-4">
               <input
                 type="text"
                 name="email"
-                required
                 [(ngModel)]="credentials.email"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-lg"
                 placeholder="Email"
+                required
               />
             </div>
             <div class="mb-6">
               <input
                 type="password"
                 name="password"
-                required
                 [(ngModel)]="credentials.password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-lg"
                 placeholder="Password"
+                required
               />
             </div>
             <div class="mb-6">
               <input
                 type="password"
-                name="password"
-                required
+                name="password_confirmation"
                 [(ngModel)]="credentials.password_confirmation"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-lg"
                 placeholder="Password Confirmation"
+                required
               />
             </div>
             <button
               type="submit"
               class="w-[15rem] rounded-md bg-love hover:bg-darken-90 py-2 px-4 border border-transparent text-center text-lg cursor-pointer text-background hover:text-text uppercase transition-all shadow-md hover:shadow-lg"
             >
-              Login
+              Sign Up
             </button>
           </form>
 
           <div class="flex flex-col justify-center items-center w-full mt-4">
-            <p class="text-lg text-muted">
-              Have an account? <a routerLink="/login" class="text-love cursor-pointer">Login</a>
+            <p class="text-lg text-muted w-[25rem]">
+              Have an account? <a routerLink="/login" class="text-love cursor-pointer">Log In</a>
             </p>
           </div>
         </div>

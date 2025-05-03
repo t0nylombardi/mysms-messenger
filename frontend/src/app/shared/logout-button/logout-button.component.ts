@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -7,7 +9,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./logout-button.component.scss']
 })
 export class LogoutButtonComponent {
-  logout() {
-    // logic to logout
+  constructor(private authService: AuthService, private router: Router) {}
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

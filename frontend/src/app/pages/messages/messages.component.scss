@@ -1,0 +1,17 @@
+main {
+  overflow: hidden;
+}
+
+.shadow-2xl-iris {
+  border-radius: 1rem;
+  border: 2px solid #c4a7e7;
+  box-shadow: 0 25px 25px -12px #c4a7e7;
+  padding: 2rem;
+}
+
+.message-border {
+  box-sizing: border-box;
+  border: 2px solid #c4a7e7;
+  border-radius: 1rem;
+  padding: 1rem;
+}

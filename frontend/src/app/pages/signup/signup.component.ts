@@ -32,8 +32,8 @@ export class SignupComponent {
       }
     }).subscribe({
       next: () => {
+        this.router.navigate(['/messages']);
         console.log('Signed up!');
-        this.router.navigate(['/dashboard']); // 👈 redirect here instead
       },
       error: err => console.error('Signup failed:', err)
     });

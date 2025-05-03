@@ -6,7 +6,7 @@ import {
 
 export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const userId = sessionStorage.getItem('userId');
+  const userId = localStorage.getItem('userId');
 
   if (userId) {
     return true;
