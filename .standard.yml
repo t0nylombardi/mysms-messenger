@@ -1,7 +1,0 @@
-plugins:
-  - standard-rails
-
-Rails:
-  Enabled: true
-
-ignore:
