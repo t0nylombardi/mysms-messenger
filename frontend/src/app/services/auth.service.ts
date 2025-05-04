@@ -2,6 +2,7 @@ import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export type LoginPayload = {
   user: {
@@ -28,7 +29,7 @@ export type MessagePayload = {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private API_URL = 'http://localhost:3000';
+  private API_URL = environment.apiUrl;
 
   private isLoggedIn = false;
 
