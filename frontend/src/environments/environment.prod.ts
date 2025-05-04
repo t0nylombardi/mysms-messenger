@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://54.227.206.231',
+  apiUrl: 'https://api.mysms-messenger.t0nylombardi.dev',
 };
