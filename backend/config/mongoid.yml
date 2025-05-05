@@ -6,6 +6,7 @@ development:
         - localhost:27017
       options:
   options:
+
 test:
   clients:
     default:
@@ -16,3 +17,15 @@ test:
         read:
           mode: :primary
         max_pool_size: 1
+
+production:
+  clients:
+    default:
+      database: mysms_messenger_api_production
+      hosts:
+        - localhost:27017
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1
+  options:
