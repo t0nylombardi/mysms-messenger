@@ -38,8 +38,10 @@ module Users
     # Called by Devise when a user signs out.
     # Attempts to decode the JWT and locate the user.
     def respond_to_on_destroy
-      @current_user = find_user_from_token
+      token = request.headers["Authorization"]&.split(" ")&.last
+      return render json: error_response("No token provided."), status: :unauthorized unless token
 
+      @current_user = find_user_from_token
       if @current_user
         render json: success_response("Logged out successfully."), status: :ok
       else

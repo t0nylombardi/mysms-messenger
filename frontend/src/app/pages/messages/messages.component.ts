@@ -41,13 +41,16 @@ export class MessagesComponent implements OnDestroy {
   constructor(private messagesService: MessagesService) {}
 
   sendMessage(): void {
-    this.messagesService.sendMessage(this.message).subscribe({
+    const payload = { ...this.message };
+
+    this.message.body = '';
+
+    this.messagesService.sendMessage(payload).subscribe({
       next: (response: HttpResponse<any>) => {
+        this.fetchMessages();
         const message = response.body?.message;
         if (message) {
           console.log('Message sent:', message);
-          this.fetchMessages();
-          this.message.body = '';
         } else {
           console.warn('[MessagesComponent] No message in response.');
         }
@@ -57,7 +60,7 @@ export class MessagesComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
-    this.pollingSub = interval(5000).subscribe(() => this.fetchMessages());
+    this.pollingSub = interval(3310).subscribe(() => this.fetchMessages());
 
     this.fetchMessages();
   }
